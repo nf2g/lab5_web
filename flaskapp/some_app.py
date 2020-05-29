@@ -75,8 +75,10 @@ def znak(files_count, image_box):
             r, g, b = image_copy[x, y, 0:3]
             r1 , g1, b1= image_interp[x, y, 0:3]
             image_copy[x, y, 0:3] = (0.5 * r + 0.5 * r1,  0.5 * g + 0.5 * g1, 0.5 * b + 0.5 * b1)
-            
-    return image_copy
+           
+    imag
+     
+    return image_box
 
 
 @app.route("/net", methods=['GET', 'POST'])
@@ -92,6 +94,7 @@ def net():
         #объединяем название файла и путь
         filename = os.path.join('./static', secure_filename(form.upload.data.filename))
         fcount, fimage = neuronet.read_image_files(10, './static')
+        
         # передаем все изображения в каталоге на классификацию
         # можете изменить немного код и передать только загруженный файл
         decode = neuronet.getresult(fimage)
@@ -102,7 +105,7 @@ def net():
         #////////////////////////////////
         #form.upload.data = znak(form.upload.data)
         #/////////////////////////////////
-        form.upload.data.save(filename)
+        #form.upload.data.save(filename)
         
     # передаем форму в шаблон, так же передаем имя файла и результат работы нейронной
     # сети если был нажат сабмит, либо передадим falsy значения
