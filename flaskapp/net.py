@@ -74,9 +74,9 @@ def getresult(image_box):
         # new_width = width
         # new_height = int(ratio * height)
         images_resized[i] = np.array(image_box[i].resize(( height, width), Image.ANTIALIAS)) / 255.0
-    image_ = images_resized[0].copy()
-    image_ = znak(image_.copy())
-    image_ = np.array(image_)
+    #image_ = images_resized[0].copy()
+    #image_ = znak(image_.copy())
+    #image_ = np.array(image_)
     
     images_resized = np.array(images_resized)
     out_net = resnet.predict(images_resized)
