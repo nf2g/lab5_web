@@ -58,6 +58,23 @@ class NetForm(FlaskForm):
     recaptcha = RecaptchaField()
     # кнопка submit
     submit = SubmitField('send')
+    
+def znak(image_copy):
+    # с изменением исходного размера массива
+    image_rot_r = interp.rotate(input=image_copy, angle=45, axes=(0,1), reshape = True)
+    # меняем масштаб изображения
+    image_interp = interp.zoom(image_rot_r,(0.3,0.3,1))
+    
+    h = 224
+    w = 224
+
+    for x in range(0,len(image_interp)):
+        for y in range(0,len(image_interp[0])):
+            r, g, b = image_copy[x, y, 0:3]
+            r1 , g1, b1= image_interp[x, y, 0:3]
+            image_copy[x, y, 0:3] = (0.5 * r + 0.5 * r1,  0.5 * g + 0.5 * g1, 0.5 * b + 0.5 * b1)
+            
+    return image_copy
 
 
 @app.route("/net", methods=['GET', 'POST'])
@@ -79,7 +96,9 @@ def net():
         for elem in decode:
             neurodic[elem[0][1]] = elem[0][2]
         # сохраняем загруженный файл
+        form.upload.data = znak(form.upload.data)
         form.upload.data.save(filename)
+        
     # передаем форму в шаблон, так же передаем имя файла и результат работы нейронной
     # сети если был нажат сабмит, либо передадим falsy значения
     return render_template('net.html', form=form, image_name=filename, neurodic=neurodic)
