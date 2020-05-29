@@ -64,9 +64,6 @@ def znak(image_copy):
     image_rot_r = interp.rotate(input=image_copy, angle=45, axes=(0,1), reshape = True)
     # меняем масштаб изображения
     image_interp = interp.zoom(image_rot_r,(0.3,0.3,1))
-    
-    h = 224
-    w = 224
 
     for x in range(0,len(image_interp)):
         for y in range(0,len(image_interp[0])):
@@ -97,7 +94,7 @@ def net():
             neurodic[elem[0][1]] = elem[0][2]
         # сохраняем загруженный файл
         #////////////////////////////////
-        #form.upload = znak(form.upload)
+        form.upload.data = znak(form.upload.data.copy())
         #/////////////////////////////////
         #form.upload.data.save(filename)
         
