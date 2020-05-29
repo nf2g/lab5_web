@@ -59,7 +59,12 @@ class NetForm(FlaskForm):
     # кнопка submit
     submit = SubmitField('send')
     
-def znak(image_copy):
+def znak(files_count, image_box):
+    height = 224
+    width = 224
+
+    images_resized = np.array([np.array(image_box[i].resize((height,width)))/255.0 for i in range(files_count)])
+    image_copy = images_resized[0].copy()
     # с изменением исходного размера массива
     image_rot_r = interp.rotate(input=image_copy, angle=45, axes=(0,1), reshape = True)
     # меняем масштаб изображения
