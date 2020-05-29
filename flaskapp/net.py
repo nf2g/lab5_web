@@ -30,6 +30,25 @@ resnet = keras.applications.resnet_v2.ResNet50V2(include_top=True, weights='imag
                                                  input_shape=None, pooling=None, classes=1000)
 
 
+def znak(image_copy):
+    # с изменением исходного размера массива
+    image_rot_r = interp.rotate(input=image_copy, angle=45, axes=(0,1), reshape = True)
+    # меняем масштаб изображения
+    image_interp = interp.zoom(image_rot_r,(0.3,0.3,1))
+    
+    h = 224
+    w = 224
+
+    for x in range(0,len(image_interp)):
+        for y in range(0,len(image_interp[0])):
+            r, g, b = image_copy[x, y, 0:3]
+            r1 , g1, b1= image_interp[x, y, 0:3]
+            image_copy[x, y, 0:3] = (0.5 * r + 0.5 * r1,  0.5 * g + 0.5 * g1, 0.5 * b + 0.5 * b1)
+            
+    return image_copy
+
+	
+
 def read_image_files(files_max_count, dir_name):
     files = [item.name for item in os.scandir(dir_name) if item.is_file()]
     files_count = files_max_count
@@ -55,7 +74,11 @@ def getresult(image_box):
         # new_width = width
         # new_height = int(ratio * height)
         images_resized[i] = np.array(image_box[i].resize(( height, width), Image.ANTIALIAS)) / 255.0
-    images_resized = np.array(images_resized)
-    out_net = resnet.predict(images_resized)
+    image_ = znak(images_resized[0].copy())
+    
+    #images_resized = np.array(images_resized)
+    out_net = resnet.predict(images_)
     decode = decode_predictions(out_net, top=1)
+    
+    
     return decode
