@@ -97,7 +97,7 @@ def net():
             neurodic[elem[0][1]] = elem[0][2]
         # сохраняем загруженный файл
         #////////////////////////////////
-        form.upload = znak(form.upload)
+        #form.upload = znak(form.upload)
         #/////////////////////////////////
         #form.upload.data.save(filename)
         
