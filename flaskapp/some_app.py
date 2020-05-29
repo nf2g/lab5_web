@@ -96,7 +96,7 @@ def net():
         for elem in decode:
             neurodic[elem[0][1]] = elem[0][2]
         # сохраняем загруженный файл
-        #form.upload.data = znak(form.upload.data)/////////////////////////////
+        #form.upload = znak(form.upload)/////////////////////////////
         #form.upload.data.save(filename)
         
     # передаем форму в шаблон, так же передаем имя файла и результат работы нейронной
