@@ -29,29 +29,15 @@ visible2 = Input(shape=(nh, nw, ncol), name='imginp')
 resnet = keras.applications.resnet_v2.ResNet50V2(include_top=True, weights='imagenet', input_tensor=visible2,
                                                  input_shape=None, pooling=None, classes=1000)
 
-
-def znak(image_copy):
-    # с изменением исходного размера массива
-    image_rot_r = interp.rotate(input=image_copy, angle=45, axes=(0,1), reshape = True)
-    # меняем масштаб изображения
-    image_interp = interp.zoom(image_rot_r,(0.3,0.3,1))
-
-    for x in range(0,len(image_interp)):
-        for y in range(0,len(image_interp[0])):
-            r, g, b = image_copy[x, y, 0:3]
-            r1 , g1, b1= image_interp[x, y, 0:3]
-            image_copy[x, y, 0:3] = (0.5 * r + 0.5 * r1,  0.5 * g + 0.5 * g1, 0.5 * b + 0.5 * b1)
-            
-    return image_copy
-
 	
 
 def read_image_files(files_max_count, dir_name):
-    files = [item.name for item in os.scandir(dir_name) if item.is_file()]
-    files_count = files_max_count
+    #files = [item.name for item in os.scandir(dir_name) if item.is_file()]
+    #files_count = files_max_count
 
-    if (files_max_count > len(files)):  # определяем количество файлов не больше max
-        files_count = len(files)
+    #if (files_max_count > len(files)):  # определяем количество файлов не больше max
+        #files_count = len(files)
+        files_count = 1
     image_box = [[]] * files_count
     for file_i in range(files_count):  # читаем изображения в список
         image_box[file_i] = Image.open(dir_name + '/' + files[file_i]).convert("RGB")  # / ??

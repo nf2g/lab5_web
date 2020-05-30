@@ -58,28 +58,6 @@ class NetForm(FlaskForm):
     recaptcha = RecaptchaField()
     # кнопка submit
     submit = SubmitField('send')
-    
-def znak(files_count, image_box):
-    height = 224
-    width = 224
-
-    images_resized = np.array([np.array(image_box[i].resize((height,width)))/255.0 for i in range(files_count)])
-    image_copy = images_resized[0].copy()
-    # с изменением исходного размера массива
-    image_rot_r = interp.rotate(input=image_copy, angle=45, axes=(0,1), reshape = True)
-    # меняем масштаб изображения
-    image_interp = interp.zoom(image_rot_r,(0.3,0.3,1))
-
-    for x in range(0,len(image_interp)):
-        for y in range(0,len(image_interp[0])):
-            r, g, b = image_copy[x, y, 0:3]
-            r1 , g1, b1= image_interp[x, y, 0:3]
-            image_copy[x, y, 0:3] = (0.5 * r + 0.5 * r1,  0.5 * g + 0.5 * g1, 0.5 * b + 0.5 * b1)
-           
-    imag
-     
-    return image_box
-
 
 @app.route("/net", methods=['GET', 'POST'])
 def net():
